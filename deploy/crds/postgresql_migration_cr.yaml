@@ -1,0 +1,23 @@
+apiVersion: cache.rawdatalabs.cloud/v1alpha1
+kind: Migration
+metadata:
+  name: example-migration
+spec:
+  # Add fields here
+  backupFilePath: /tmp/backup.tar
+  backupFormat: tar
+  databaseDriver: postgresql
+  dump: 
+    service: postgresql-persistent.development.svc
+    port: "5432"
+    database: inventory
+    username: postgres
+    password: postgres
+  restore: 
+    service: postgresql.devtest.svc
+    port: "5432"
+    auth_db: postgres
+    username: postgres
+    password: postgres
+    # @optional  - not used yet
+    database: inventory

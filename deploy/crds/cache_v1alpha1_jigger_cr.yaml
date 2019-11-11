@@ -1,0 +1,12 @@
+apiVersion: cache.rawdatalabs.cloud/v1alpha1
+kind: Jigger
+metadata:
+  name: example-jigger
+spec:
+  # Add fields here
+  metadata:
+    labels:
+      app: JiggerServer
+      version: "0.1"
+    # annotations: 
+      # ""

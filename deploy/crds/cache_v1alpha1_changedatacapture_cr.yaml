@@ -1,0 +1,11 @@
+apiVersion: cache.rawdatalabs.cloud/v1alpha1
+kind: ChangeDataCapture
+metadata:
+  name: example-changedatacapture
+spec:
+  # Add fields here
+  driver: database
+  type: postgresql
+  sourceConnectionString: ""
+  destinationConnectionString: ""
+  options: ""
