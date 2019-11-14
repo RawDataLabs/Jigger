@@ -16,11 +16,10 @@ spec:
   restore: 
     hostname: postgresql.devtest.svc
     port: "5432"
-    auth_db: postgres
+    database: inventory
     username: postgres
     password: postgres
     # @optional  - not used yet
-    database: inventory
 
 
 

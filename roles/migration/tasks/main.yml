@@ -1,4 +1,0 @@
----
-# tasks file for migration
-- debug:
-    msg: "newParameter value from CR spec: {{ new_parameter }}"

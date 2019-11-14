@@ -4,5 +4,5 @@ metadata:
   name: example-pvc-migration
 spec:
   # Add fields here
-  source-storage: dummy-storage-pvc
-  destination-storage: test-migration-pvc
+  source-storage: dummy-source-pvc
+  destination-storage: dummy-destination-pvc
