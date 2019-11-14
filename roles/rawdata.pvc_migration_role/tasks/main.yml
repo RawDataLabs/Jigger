@@ -1,0 +1,33 @@
+---
+# tasks file for rawdata.pvc_migration_role
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: name
+spec:
+  template:
+    spec:
+      volumes:
+      - name: source-storage
+        persistentVolumeClaim:
+          claimName: {{source-storage}}
+      - name: destination-storage
+        persistentVolumeClaim:
+          claimName: {{destination-storage}}
+      containers:
+      - name: rsync-pod
+        image: quay.io/rawdatalabs/alpine-kubectl
+        command:
+        - rsync
+        - "-a"
+        - "--progress"
+        - "/mount1/"
+        - "/mount2/"
+        volumeMounts:
+        - mountPath: "/mount1"
+          name: source-storage
+        - mountPath: "/mount2"
+          name: destination-storage
+      restartPolicy: OnFailure
+  backoffLimit: '4'
+

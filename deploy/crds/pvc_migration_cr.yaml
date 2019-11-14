@@ -1,0 +1,8 @@
+apiVersion: cache.rawdatalabs.cloud/v1alpha1
+kind: Migration
+metadata:
+  name: example-pvc-migration
+spec:
+  # Add fields here
+  source-storage: dummy-storage-pvc
+  destination-storage: test-migration-pvc

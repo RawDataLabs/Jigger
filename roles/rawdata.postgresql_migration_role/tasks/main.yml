@@ -1,0 +1,32 @@
+---
+# tasks file for postgresql
+- name: start postgresql
+  k8s:
+    definition:
+      kind: Job
+      metadata:
+        name: metadata
+      spec:
+        template:
+          spec:
+            volumes:
+            - name: tmp
+              emptyDir: {}
+            containers:
+            - name: export-pod
+              image: ''
+              volumeMounts:
+              - name: tmp
+                mountPath: "/tmp"
+              command:
+              - bash
+              - "-c"
+              - dump
+            restartPolicy: OnFailure
+        backoffLimit: '4'
+
+
+
+      pg_dump = "pg_dump --dbname=postgresql://{username}:{password}@{service}:{port}/{database} -v -h {service} -p {port} --format={backupFormat} -f {backupFilePath}".format(
+
+      pg_restore = "pg_restore --dbname=postgresql://{username}:{password}@{service}:{port}/{auth_db} -v -C -h {service} -p {port} --format={backupFormat}  {backupFilePath}".format(
