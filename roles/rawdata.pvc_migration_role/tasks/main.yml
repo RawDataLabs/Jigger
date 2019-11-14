@@ -13,10 +13,10 @@
             volumes:
             - name: source-storage
               persistentVolumeClaim:
-                claimName: {{source-storage}}
+                claimName: "{{source-storage}}"
             - name: destination-storage
               persistentVolumeClaim:
-                claimName: {{destination-storage}}
+                claimName: "{{destination-storage}}"
             containers:
             - name: rsync-pod
               image: quay.io/rawdatalabs/rhel-ubi7-rsync
