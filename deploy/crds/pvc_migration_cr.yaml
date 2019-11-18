@@ -4,5 +4,5 @@ metadata:
   name: example-pvc-migration
 spec:
   # Add fields here
-  sourceStorage: dummy-source-pvc
+  sourceStorage: postgresql
   destinationStorage: dummy-destination-pvc
