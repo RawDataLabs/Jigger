@@ -1,7 +1,7 @@
 apiVersion: cache.rawdatalabs.cloud/v1alpha1
-kind: Migration
+kind: MongodbMigration
 metadata:
-  name: example-migration
+  name: example-mongodb-migration
 spec:
   # Add fields here
   backupFilePath: /tmp/archive.gz
@@ -9,13 +9,14 @@ spec:
   dump: 
     service: mongodb.development.svc
     port: "27017"
-    database: rawdatalabs-ui
-    username: rawdatalabs-ui
-    password: rawdatalabs-ui
+    database: rawdata-dev
+    username: rawdata-dev
+    password: rawdata-dev
   restore: 
     service: mongodb.devtest.svc
     port: "27017"
     authdb: admin
-    database: rawdatalabs-ui
+    database: rawdata-dev
     username: admin
     password: mongodb
+

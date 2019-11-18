@@ -25,3 +25,11 @@ h3. PostgreSql Driver type:
 
 h3. MongoDB  Driver type:
 /...
+
+
+
+h1.  Installation
+
+$ sh ./operator_setup.sh
+
+$ oc create -f ./deploy/crds/cache_v1alpha1_pvcmigration_crd.yaml

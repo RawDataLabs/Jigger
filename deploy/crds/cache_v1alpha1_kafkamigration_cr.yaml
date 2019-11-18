@@ -1,0 +1,7 @@
+apiVersion: cache.rawdatalabs.cloud/v1alpha1
+kind: KafkaMigration
+metadata:
+  name: example-kafkamigration
+spec:
+  # Add fields here
+  size: 3

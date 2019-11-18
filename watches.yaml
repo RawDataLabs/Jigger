@@ -1,8 +1,16 @@
 ---
 - version: v1alpha1
   group: cache.rawdatalabs.cloud
-  kind: Migration
+  kind: PostgresqlMigration
+  role: /opt/ansible/roles/rawdata.postgresql_migration_role
+- version: v1alpha1
+  group: cache.rawdatalabs.cloud
+  kind: PvcMigration
   role: /opt/ansible/roles/rawdata.pvc_migration_role
+- version: v1alpha1
+  group: cache.rawdatalabs.cloud
+  kind: MongodbMigration
+  role: /opt/ansible/roles/rawdata.mongodb_migration_role
 # - version: v1alpha1
 #   group: cache.rawdatalabs.cloud
 #   kind: ChangeDataCapture

@@ -43,6 +43,10 @@ rules:
   resources:
   - '*'
   - changedatacaptures
+  - mongodbmigrations
   - jiggers
+  - pvcmigrations
+  - postgresqlmigrations
+  - kafkamigrations
   verbs:
   - '*'

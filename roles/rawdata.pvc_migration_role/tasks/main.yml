@@ -6,7 +6,8 @@
       kind: Job
       apiVersion: batch/v1
       metadata:
-        name: name
+        name: "{{ meta.name }}"
+        namespace: "{{ meta.namespace }}"
       spec:
         template:
           spec:

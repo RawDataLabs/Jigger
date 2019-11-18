@@ -5,7 +5,8 @@
     definition:
       kind: Job
       metadata:
-        name: metadata
+        name: "{{ meta.name }}"
+        namespace: "{{ meta.namespace }}"
       spec:
         template:
           spec:
@@ -14,7 +15,7 @@
               emptyDir: {}
             containers:
             - name: export-pod
-              image: ''
+              image: 'quay.io/rawdatalabs/postgresql-96-rhel7:latest'
               volumeMounts:
               - name: tmp
                 mountPath: "/tmp"
