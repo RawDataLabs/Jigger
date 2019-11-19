@@ -4,9 +4,9 @@
 NAMESPACE=$(oc project demo)
 
 echo "Creating CRDS"
-oc create -f ./deploy/crds/cache_v1alpha1_pvcmigration_cr.yaml
-oc create -f ./deploy/crds/cache_v1alpha1_postgresqlmigration_cr.yaml
-oc create -f ./deploy/crds/cache_v1alpha1_mongodbmigration_cr.yaml
+oc create -f ./deploy/crds/cache_v1alpha1_pvcmigration_crd.yaml
+oc create -f ./deploy/crds/cache_v1alpha1_postgresqlmigration_crd.yaml
+oc create -f ./deploy/crds/cache_v1alpha1_mongodbmigration_crd.yaml
 
 sleep 1
 

@@ -5,6 +5,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: jigger-operator
+  namespace: "*"
 roleRef:
   kind: ClusterRole
   name: jigger-operator
