@@ -2,7 +2,7 @@
 # tasks file for rawdata.pvc_migration_role
 - name: start PVC Migration Job
   k8s:
-    definition:
+    definition: |
       kind: Job
       apiVersion: batch/v1
       metadata:
@@ -14,13 +14,13 @@
             volumes:
             - name: source-storage
               persistentVolumeClaim:
-                claimName: "{{source_storage}}"
+                claimName: "{{ source_storage }}"
             - name: destination-storage
               persistentVolumeClaim:
-                claimName: "{{destination_storage}}"
+                claimName: "{{ destination_storage }}"
             containers:
             - name: rsync-pod
-              image: quay.io/rawdatalabs/rhel-ubi7-rsync
+              image: quay.io/rawdatalabs/rhel-ubi7-rsync:latest
               # image: quay.io/rawdatalabs/alpine-kubectl
               command:
               - rsync

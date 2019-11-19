@@ -2,7 +2,7 @@
 # tasks file for postgresql
 - name: start postgresql migration job
   k8s:
-    definition:
+    definition: |
       kind: Job
       metadata:
         name: "{{ meta.name }}"
@@ -22,7 +22,7 @@
               command:
               - bash
               - "-c"
-              - "pg_dump --dbname=postgresql://{{ dump.username }}:{{ dump.password }}@{{ dump.hostname }}:{{ dump.port }}/{{ dump.database }} -v -h {{ dump.hostname }} -p {{ dump.port }} --format={{ dump.backup_format }} -f {{ dump.backup_file_path }}  && pg_restore --dbname=postgresql://{{ restore.username }}:{{ restore.password }}@{{ restore.service }}:{{ restore.port }}/{{ restore.database }} -v -C -h {{ restore.service }} -p {{ restore.port }} --format={{ restore.backup_format }}  {{ restore.backup_file_path }}"
+              - "pg_dump --dbname=postgresql://{{ dump.username }}:{{ dump.password }}@{{ dump.hostname }}:{{ dump.port }}/{{ dump.database }} -v -h {{ dump.hostname }} -p {{ dump.port }} --format={{ backup_format }} -f {{ backup_file_path }}  && pg_restore --dbname=postgresql://{{ restore.username }}:{{ restore.password }}@{{ restore.hostname }}:{{ restore.port }}/{{ restore.database }} -v -C -h {{ restore.hostname }} -p {{ restore.port }} --format={{ backup_format }}  {{ backup_file_path }}"
             restartPolicy: OnFailure
         backoffLimit: '4'
 
