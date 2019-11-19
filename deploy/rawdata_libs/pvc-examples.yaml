@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dummy-destination-pvc
+  namespace: tutorial
+  labels: 
+    app: jigger-demo
+spec:
+  storageClassName: "external-glusterfs"
+
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: posgresql
+  namespace: tutorial
+  labels: 
+    app: jigger-demo
+spec:
+  storageClassName: "external-glusterfs"
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi

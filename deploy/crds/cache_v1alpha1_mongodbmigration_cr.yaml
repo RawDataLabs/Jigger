@@ -2,6 +2,9 @@ apiVersion: cache.rawdatalabs.cloud/v1alpha1
 kind: MongodbMigration
 metadata:
   name: example-mongodb-migration
+  namespace: tutorial
+annotations:
+  ansible.operator-sdk/reconcile-period: "30s"
 spec:
   # Add fields here
   backupFilePath: /tmp/archive.gz

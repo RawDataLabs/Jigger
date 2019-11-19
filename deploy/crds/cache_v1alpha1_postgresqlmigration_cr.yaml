@@ -1,7 +1,8 @@
 apiVersion: cache.rawdatalabs.cloud/v1alpha1
-kind: Migration
+kind: PostgresqlMigration
 metadata:
   name: example-postgresql-migration
+  namespace: tutorial
 spec:
   # Add fields here
   backupFilePath: /tmp/backup.tar
