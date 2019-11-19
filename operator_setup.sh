@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # replace NAMESPACE  
-NAMESPACE=demo
+NAMESPACE=$(oc project demo)
 
 echo "Creating CRDS"
 oc create -f ./deploy/crds/cache_v1alpha1_pvcmigration_cr.yaml
@@ -13,6 +13,8 @@ echo "Creating Operator Resources"
 oc create -f ./deploy/service_account.yaml
 oc create -f ./deploy/role.yaml
 oc create -f ./deploy/role_binding.yaml
+oc create -f ./deploy/cluster_role.yaml
+oc create -f ./deploy/cluster_role_binding.yaml
 oc create -f ./deploy/operator.yaml
 
 echo "Creating Operator RBAC"
