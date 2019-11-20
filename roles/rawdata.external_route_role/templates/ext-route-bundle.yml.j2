@@ -1,0 +1,41 @@
+---
+
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: {{ route.name }}
+subsets:
+- addresses:
+  - ip: {{ route.external_ip }}
+  ports:
+  - port: {{ route.external_port }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ route.name }}
+spec:
+  ports:
+  - port: 1
+    protocol: TCP
+    targetPort: {{ route.external_port }}
+  sessionAffinity: None
+  type: ClusterIP
+
+---
+
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  name: {{ route.name }}
+spec:
+  host: {{ route.hostname }}
+  to:
+    kind: Service
+    name: {{ route.name }}
+    weight: 100
+  wildcardPolicy: None

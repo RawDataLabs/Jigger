@@ -1,0 +1,11 @@
+apiVersion: cache.rawdatalabs.cloud/v1alpha1
+kind: ExternalRoute
+metadata:
+  name: example-google-externalroute
+spec:
+  # Add fields here
+  route: 
+    name: google-ro
+    external_ip: 172.217.20.131
+    external_port: 443
+    hostname:  1

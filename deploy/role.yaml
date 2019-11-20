@@ -55,5 +55,6 @@ rules:
   - pvcmigrations
   - postgresqlmigrations
   - kafkamigrations
+  - externalroutes
   verbs:
   - '*'
