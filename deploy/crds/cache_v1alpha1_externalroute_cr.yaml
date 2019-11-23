@@ -8,4 +8,4 @@ spec:
     name: google-ro
     external_ip: 172.217.20.131
     external_port: 443
-    hostname:  1
+    hostname:  google-ro

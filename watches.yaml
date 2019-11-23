@@ -11,6 +11,10 @@
   group: cache.rawdatalabs.cloud
   kind: MongodbMigration
   role: /opt/ansible/roles/rawdata.mongodb_migration_role
+- version: v1alpha1
+  group: cache.rawdatalabs.cloud
+  kind: ExternalRoute
+  role: /opt/ansible/roles/rawdata.external_route_role
 # - version: v1alpha1
 #   group: cache.rawdatalabs.cloud
 #   kind: ChangeDataCapture
