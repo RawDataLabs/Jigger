@@ -1,0 +1,8 @@
+package: .
+import:
+- package: github.com/openshift/client-go
+  version: release-3.9
+- package: github.com/gomodule/redigo
+  version: ^2.0.0
+  subpackages:
+  - redis
