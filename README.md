@@ -1,5 +1,5 @@
-### Jigger
-jigger /ˈdʒɪɡə/ - Tested on OpenShift (v4.1, v3.11), this OpenShift Ansible Operator integrates multiple Certified RedHat Container Images acting as Database Clients and adds Migration Utility support for Databases deployed on OpenShift
+# Jigger
+jigger /ˈdʒɪɡə/ - Tested on OpenShift (v4.1, v3.11), this Ansible Operator integrates multiple Certified RedHat Container Images acting as Database Clients trying to achieve kubernetes native migration jobs for databases deployed on OpenShift
 
 Events are trigger by the corresponding CustomResources being created on the Cluster
 
@@ -14,16 +14,16 @@ Events are trigger by the corresponding CustomResources being created on the Clu
   - @Todo  Source Code Repositories (Git, GitLab)
   @Todo 
 
-Transforming OpenShift CR (CustomResource) Events  in an Universal Database Migrator Operator 
+Transforming OpenShift CR (CustomResource) Events in an Universal Database Migration Tool
 
 [..]  Example CR
 
-# PostgreSql Driver type:
+### PostgreSql Driver type:
 /...
 
 
 
-# MongoDB  Driver type:
+### MongoDB  Driver type:
 /...
 
 
