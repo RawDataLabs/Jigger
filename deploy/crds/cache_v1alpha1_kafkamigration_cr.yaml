@@ -1,7 +1,13 @@
 apiVersion: cache.rawdatalabs.cloud/v1alpha1
 kind: KafkaMigration
 metadata:
-  name: example-kafkamigration
+  name: kafka-mirror-maker
 spec:
-  # Add fields here
-  size: 3
+  version: 2.3.0
+  replicas: 1
+  consumer:
+    bootstrapServers: 'my-source-cluster-kafka-bootstrap:9092'
+    groupId: my-source-group-id
+  producer:
+    bootstrapServers: 'my-target-cluster-kafka-bootstrap:9092'
+  whitelist: .*

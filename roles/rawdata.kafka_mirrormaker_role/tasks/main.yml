@@ -1,0 +1,32 @@
+---
+# tasks file for rawdata.kafka_mirrormaker_role
+# @TODO
+
+- name: start kafka migration job
+  k8s:
+    definition: |
+      kind: Job
+      metadata:
+        name: "{{ meta.name }}"
+        namespace: "{{ meta.namespace }}"
+      spec:
+        template:
+          spec:
+            volumes:
+            - name: tmp
+              emptyDir: {}
+            containers:
+            - name: export-pod
+              image: 'quay.io/rawdatalabs/amqstreams-kafka-23-rhel7:latest'
+              volumeMounts:
+              - name: tmp
+                mountPath: "/tmp"
+              command:
+              - bash
+              - "-c"
+              - "$ bin/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.config consumer-1.properties \ --consumer.config consumer-2.properties --producer.config producer.properties \ --whitelist my-topic"
+            restartPolicy: OnFailure
+        backoffLimit: '4'
+
+
+

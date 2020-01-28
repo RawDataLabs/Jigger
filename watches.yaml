@@ -15,6 +15,10 @@
   group: cache.rawdatalabs.cloud
   kind: ExternalRoute
   role: /opt/ansible/roles/rawdata.external_route_role
+- version: v1alpha1
+  group: cache.rawdatalabs.cloud
+  kind: KafkaMigration
+  role: /opt/ansible/roles/rawdata.kafka_mirrormaker_role
 # - version: v1alpha1
 #   group: cache.rawdatalabs.cloud
 #   kind: ChangeDataCapture
