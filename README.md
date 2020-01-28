@@ -1,9 +1,9 @@
-# Jigger
+### Jigger
 jigger /ˈdʒɪɡə/ - Tested on OpenShift (v4.1, v3.11), this OpenShift Ansible Operator integrates multiple Certified RedHat Container Images acting as Database Clients and adds Migration Utility support for Databases deployed on OpenShift
 
 Events are trigger by the corresponding CustomResources being created on the Cluster
 
-#h2. Supported Db Client Drivers:
+## Supported Db Client Drivers:
   - PostgreSql
   - MongoDB
   - OpenShift PersistentVolumeClaims
@@ -18,17 +18,17 @@ Transforming OpenShift CR (CustomResource) Events  in an Universal Database Migr
 
 [..]  Example CR
 
-h3. PostgreSql Driver type:
+# PostgreSql Driver type:
 /...
 
 
 
-h3. MongoDB  Driver type:
+# MongoDB  Driver type:
 /...
 
 
 
-h1.  Installation
+##  Installation
 
 $ sh ./operator_setup.sh
 
