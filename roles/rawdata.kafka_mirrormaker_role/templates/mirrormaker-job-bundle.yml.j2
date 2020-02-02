@@ -1,0 +1,89 @@
+---
+kind: Job
+  metadata:
+    name: "{{ meta.name }}"-job
+  spec:
+    template:
+      spec:
+        volumes:
+        - name: kafka-properties
+          configMap:
+            name: "{{ meta.name }}"-configmap
+            defaultMode: 0555
+        - name: tmp
+          emptyDir: {}
+        containers:
+        - name: job-runner
+          image: "quay.io/rawdatalabs/amqstreams-kafka-23-rhel7:latest"
+          volumeMounts:
+          - name: tmp
+            mountPath: "/tmp"
+          - name: kafka-properties
+            mountPath: "/etc/jigger/"
+          command:
+          - bash
+          - "-c"
+          @TODO
+          - "$ bin/kafka-mirror-maker.sh --consumer.config /etc/jigger/consumer.config --num.streams 2 --producer.config /etc/jigger/producer.config --whitelist={{whitelist}}"
+        restartPolicy: OnFailure
+    backoffLimit: '4'
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ meta.name }}"-configmap
+  labels:
+    heritage: "{{ meta.name }}"-job
+data:
+  consumer.properies: |
+    # Zookeeper connection string
+    # comma separated host:port pairs, each corresponding to a zk
+    # server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002"
+    zookeeper.connect={{consumer.zookeeperConnect}}
+
+    # timeout in ms for connecting to zookeeper
+    zookeeper.connection.timeout.ms=1000000
+
+    #consumer group id
+    group.id={{consumer.groupId}}
+
+    #consumer timeout
+    #consumer.timeout.ms=5000
+
+  producer.properies: |
+    # list of brokers used for bootstrapping knowledge about the rest of the cluster
+    # format: host1:port1,host2:port2 ...
+    metadata.broker.list={{producer.bootstrapServers}}
+
+    # name of the partitioner class for partitioning events; default partition spreads data randomly
+    #partitioner.class=
+
+    # specifies whether the messages are sent asynchronously (async) or synchronously (sync)
+    producer.type=sync
+
+    # specify the compression codec for all data generated: none , gzip, snappy.
+    # the old config values work as well: 0, 1, 2 for none, gzip, snappy, respectivally
+    compression.codec=none
+
+    # message encoder
+    serializer.class=kafka.serializer.DefaultEncoder
+
+    # allow topic level compression
+    #compressed.topics=
+
+    ############################# Async Producer #############################
+    # maximum time, in milliseconds, for buffering data on the producer queue 
+    #queue.buffering.max.ms=
+
+    # the maximum size of the blocking queue for buffering on the producer 
+    #queue.buffering.max.messages=
+
+    # Timeout for event enqueue:
+    # 0: events will be enqueued immediately or dropped if the queue is full
+    # -ve: enqueue will block indefinitely if the queue is full
+    # +ve: enqueue will block up to this many milliseconds if the queue is full
+    #queue.enqueue.timeout.ms=
+
+    # the number of messages batched at the producer 
+    #batch.num.messages=
