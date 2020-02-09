@@ -1,0 +1,259 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[
+    {
+      "apiVersion": "cache.rawdatalabs.cloud/v1alpha1",
+      "kind": "ExternalRoute",
+      "metadata": {
+        "name": "grafana-prod-externalroute"
+      },
+      "spec": {
+        "route": {
+          "name": "grafana-prod",
+          "external_ip": "10.10.7.221",
+          "external_port": 3000,
+          "hostname": "grafana.production.rawdatalabs.com"
+        }
+      }
+    },
+    {
+      "apiVersion": "cache.rawdatalabs.cloud/v1alpha1",
+      "kind": "PostgresqlMigration",
+      "metadata": {
+        "name": "example-postgresql-migration",
+        "namespace": "tutorial"
+      },
+      "spec": {
+        "backupFilePath": "/tmp/backup.tar",
+        "backupFormat": "tar",
+        "databaseDriver": "postgresql",
+        "dump": {
+          "hostname": "postgresql-persistent.development.svc",
+          "port": "5432",
+          "database": "inventory",
+          "username": "postgres",
+          "password": "postgres"
+        },
+        "restore": {
+          "hostname": "postgresql.devtest.svc",
+          "port": "5432",
+          "database": "inventory",
+          "username": "postgres",
+          "password": "postgres"
+        }
+      }
+    },
+    {
+      "apiVersion": "cache.rawdatalabs.cloud/v1alpha1",
+      "kind": "PvcMigration",
+      "metadata": {
+        "name": "example-pvc-migration",
+        "namespace": "operator-test"
+      },
+      "spec": {
+        "sourceStorage": "postgresql",
+        "destinationStorage": "dummy-destination-pvc"
+      }
+    },
+    {
+      "apiVersion": "cache.rawdatalabs.cloud/v1alpha1",
+      "kind": "MongodbMigration",
+      "metadata": {
+        "name": "example-mongodb-migration"
+      },
+      "spec": {
+        "backupFilePath": "/tmp/archive.gz",
+        "databaseDriver": "mongodb",
+        "dump": {
+          "service": "mongodb.development.svc",
+          "port": "27017",
+          "database": "rawdata-dev",
+          "username": "rawdata-dev",
+          "password": "rawdata-dev"
+        },
+        "restore": {
+          "service": "mongodb.devtest.svc",
+          "port": "27017",
+          "authdb": "admin",
+          "database": "rawdata-dev",
+          "username": "admin",
+          "password": "mongodb"
+        }
+      }
+    },
+    {
+      "apiVersion": "cache.rawdatalabs.cloud/v1alpha1",
+      "kind": "KafkaMigration",
+      "metadata": {
+        "name": "kafka-mirror-maker"
+      },
+      "spec": {
+        "consumer": {
+          "bootstrapServers": "my-source-cluster-kafka-bootstrap:9092",
+          "groupId": "my-source-group-id"
+        },
+        "producer": {
+          "bootstrapServers": "my-target-cluster-kafka-bootstrap:9092"
+        },
+        "whitelist": ".*"
+      }
+    }
+  ]'
+    capabilities: Deep Insights
+    categories: Data Transfer and Security
+    certified: 'False'
+    containerImage: 'quay.io/rawdatalabs/jigger-operator:v0.0.1'
+    createdAt: 2020-02-02 00:00:00
+    description: 'An Operator for installing and managing Jigger'
+    repository: 'https://github.com/RawDataLabs/Jigger'
+  name: jigger.v0.0.1
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions: 
+    owned:
+      - description: "Represents a PVC Migration Job Instance"
+        displayName: "PvcMigration"
+        kind: PvcMigration
+        name: pvcmigrations.cache.rawdatalabs.cloud
+        version: cache.rawdatalabs.cloud/v1alpha1
+      - description: "Represents a Postgresql Migration Job Instance"
+        displayName: "PostgresqlMigration"
+        kind: PostgresqlMigration
+        name: postgresqlmigrations.cache.rawdatalabs.cloud
+        version: cache.rawdatalabs.cloud/v1alpha1
+      - description: "Represents a Mongodb Migration Job Instance"
+        displayName: "MongodbMigration"
+        kind: MongodbMigration
+        name: mongodbmigrations.cache.rawdatalabs.cloud
+        version: cache.rawdatalabs.cloud/v1alpha1
+      - description: "Represents a Kafka Topic Migration Job Instance"
+        displayName: "KafkaMigration"
+        kind: KafkaMigration
+        name: kafkamigrations.cache.rawdatalabs.cloud
+        version: cache.rawdatalabs.cloud/v1alpha1
+      - description: "Represents a External Route Instance"
+        displayName: "ExternalRoute"
+        kind: ExternalRoute
+        name: externalroutes.cache.rawdatalabs.cloud
+        version: cache.rawdatalabs.cloud/v1alpha1
+  description: |
+    jigger /ˈdʒɪɡə/ - A small measuring cup is a mark of cocktail precision  |    This OpenShift (v4.1, v3.11) Ansible Operator integrates a collection* of Certified RedHat Container Images abstracting support a *Generic Db Client Tool | Transforming OpenShift CR (CustomResource) Events  in an Universal Database Migrator Operator 
+  keywords: 
+    - Data Migration Tool
+    - Openshift Operator
+  displayName: Jigger
+  install:
+    spec:
+      deployments:
+      - name: jigger-operator
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              name: jigger-operator
+          strategy: {}
+          template:
+            metadata:
+              labels:
+                name: jigger-operator
+            spec:
+              containers:
+              - env:
+                - name: WATCH_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.annotations['olm.targetNamespaces']
+                - name: OPERATOR_NAME
+                  value: jigger-operator
+                image: quay.io/rawdatalabs/jigger-operator:v0.0.1
+                imagePullPolicy: Always
+                name: jigger-operator
+                ports:
+                - containerPort: 60000
+                  name: metrics
+                resources: {}
+              serviceAccountName: jigger-operator
+      permissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          - services
+          - endpoints
+          - persistentvolumeclaims
+          - events
+          - configmaps
+          - secrets
+          - jobs
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - namespaces
+          verbs:
+          - get
+        - apiGroups:
+          - batch
+          resources:
+          - jobs
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - deployments
+          - daemonsets
+          - replicasets
+          - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - servicemonitors
+          verbs:
+          - get
+          - create
+        - apiGroups:
+          - cache.rawdatalabs.cloud
+          resources:
+          - '*'
+          - changedatacaptures
+          - mongodbmigrations
+          - jiggers
+          - pvcmigrations
+          - postgresqlmigrations
+          - kafkamigrations
+          - externalroutes
+          verbs:
+          - '*'
+        serviceAccountName: jigger-operator
+    strategy: deployment
+  installModes:
+  - supported: true
+    type: OwnNamespace
+  - supported: true
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  replaces: jigger.v0.0.0
+  version: 0.0.1
+  links:
+    - name: Documentation
+      url: https://github.com/RawDataLabs/Jigger
+    - name: Jigger
+      url: https://github.com/RawDataLabs/Jigger
+  maintainers:
+    - email: alin.spinu@rawdatalabs.com
+      name: Spinu Alin 
+  maturity: alpha
+  provider:
+    name: RawData Labs
