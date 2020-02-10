@@ -1,0 +1,5 @@
+channels:
+- currentCSV: jigger-operator.v0.0.1
+  name: alpha
+defaultChannel: alpha
+packageName: jigger-operator

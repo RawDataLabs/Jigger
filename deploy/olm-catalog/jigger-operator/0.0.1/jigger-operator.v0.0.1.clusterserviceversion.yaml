@@ -1,0 +1,213 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  name: jigger-operator.v0.0.1
+  namespace: placeholder
+  annotations:
+    capabilities: Basic Install
+    categories: Developer Tools
+    certified: 'False'
+    support: RawData Labs
+    containerImage: 'quay.io/rawdatalabs/jigger-operator:v0.0.1'
+    createdAt: 2020-02-02 00:00:00
+    description: |
+      An Operator for installing and managing Jigger | Data Transfer made easy and streamlined using Jigger Migrations
+    repository: 'https://github.com/RawDataLabs/Jigger'
+    alm-examples: '[
+    {
+      "apiVersion": "cache.rawdatalabs.cloud/v1alpha1",
+      "kind": "ExternalRoute",
+      "metadata": {
+        "name": "grafana-production-externalroute",
+        "namespace": "tutorial"
+      },
+      "spec": {
+        "route": {
+          "name": "grafana-external-clients",
+          "external_ip": "10.10.X.X",
+          "external_port": 3000,
+          "hostname": "grafana.production.rawdatalabs.com"
+        }
+      }
+    },
+    {
+      "apiVersion": "cache.rawdatalabs.cloud/v1alpha1",
+      "kind": "PostgresqlMigration",
+      "metadata": {
+        "name": "example-postgresql-migration",
+        "namespace": "tutorial"
+      },
+      "spec": {
+        "backupFilePath": "/tmp/backup.tar",
+        "backupFormat": "tar",
+        "databaseDriver": "postgresql",
+        "dump": {
+          "hostname": "postgresql.dummy-env01.svc",
+          "port": "5432",
+          "database": "dummyDB",
+          "username": "dummy",
+          "password": "dummy"
+        },
+        "restore": {
+          "hostname": "postgresql.dummy-env02.svc",
+          "port": "5432",
+          "database": "dummyDB",
+          "username": "dummy",
+          "password": "dummy"
+        }
+      }
+    },
+    {
+      "apiVersion": "cache.rawdatalabs.cloud/v1alpha1",
+      "kind": "PvcMigration",
+      "metadata": {
+        "name": "example-pvc-migration",
+        "namespace": "tutorial"
+      },
+      "spec": {
+        "sourceStorage": "dummy-source-pvc",
+        "destinationStorage": "dummy-destination-pvc"
+      }
+    }
+  ]'
+    
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions: 
+    owned:
+      - description: "Represents a PVC Migration Job Instance"
+        displayName: "PvcMigration"
+        kind: PvcMigration
+        name: pvcmigrations.cache.rawdatalabs.cloud
+        version: v1alpha1
+      - description: "Represents a Postgresql Migration Job Instance"
+        displayName: "PostgresqlMigration"
+        kind: PostgresqlMigration
+        name: postgresqlmigrations.cache.rawdatalabs.cloud
+        version: v1alpha1
+      - description: "Represents a External Route Instance"
+        displayName: "ExternalRoute"
+        kind: ExternalRoute
+        name: externalroutes.cache.rawdatalabs.cloud
+        version: v1alpha1
+  description: |
+    jigger /ˈdʒɪɡə/ - A small measuring cup is a mark of cocktail precision  |    This OpenShift (v4.1, v3.11) Ansible Operator integrates a collection* of Certified RedHat Container Images abstracting support a *Generic Db Client Tool | Transforming OpenShift CR (CustomResource) Events  in an Universal Database Migrator Operator 
+  keywords: 
+    - Data Migration Tool
+    - Openshift Operator
+  icon:
+  - base64data: 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
+    mediatype: image/png
+  displayName: Jigger
+  install:
+    spec:
+      deployments:
+      - name: jigger-operator
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              name: jigger-operator
+          strategy: {}
+          template:
+            metadata:
+              labels:
+                name: jigger-operator
+            spec:
+              containers:
+              - env:
+                - name: WATCH_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.annotations['olm.targetNamespaces']
+                - name: OPERATOR_NAME
+                  value: jigger-operator
+                image: quay.io/rawdatalabs/jigger-operator:v0.0.1
+                imagePullPolicy: Always
+                name: jigger-operator
+                ports:
+                - containerPort: 60000
+                  name: metrics
+                resources: {}
+              serviceAccountName: jigger-operator
+      permissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          - services
+          - endpoints
+          - persistentvolumeclaims
+          - events
+          - configmaps
+          - secrets
+          - jobs
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - namespaces
+          verbs:
+          - get
+        - apiGroups:
+          - batch
+          resources:
+          - jobs
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - deployments
+          - daemonsets
+          - replicasets
+          - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - servicemonitors
+          verbs:
+          - get
+          - create
+        - apiGroups:
+          - cache.rawdatalabs.cloud
+          resources:
+          - '*'
+          # - changedatacaptures
+          # - mongodbmigrations
+          # - kafkamigrations
+          - jiggers
+          - pvcmigrations
+          - postgresqlmigrations
+          - externalroutes
+          verbs:
+          - '*'
+        serviceAccountName: jigger-operator
+    strategy: deployment
+  installModes:
+  - supported: true
+    type: OwnNamespace
+  - supported: true
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  replaces: jigger-operator.v0.0.0
+  version: 0.0.1
+  links:
+    - name: Documentation
+      url: https://github.com/RawDataLabs/Jigger
+    - name: Jigger Operator
+      url: https://github.com/RawDataLabs/Jigger
+  maintainers:
+    - email: alin.spinu@rawdatalabs.com
+      name: Spinu Alin 
+  maturity: alpha
+  provider:
+    name: RawData Labs
