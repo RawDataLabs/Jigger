@@ -4,23 +4,21 @@ metadata:
   name: example-postgresql-migration
   namespace: tutorial
 spec:
-  # Add fields here
   backupFilePath: /tmp/backup.tar
   backupFormat: tar
   databaseDriver: postgresql
   dump: 
-    hostname: postgresql-persistent.development.svc
+    hostname: postgresql.development.svc
     port: "5432"
     database: inventory
     username: postgres
     password: postgres
   restore: 
-    hostname: postgresql.devtest.svc
+    hostname: postgresql.staging.svc
     port: "5432"
     database: inventory
     username: postgres
     password: postgres
-    # @optional  - not used yet
 
 
 

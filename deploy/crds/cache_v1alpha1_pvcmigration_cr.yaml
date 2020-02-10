@@ -2,7 +2,7 @@ apiVersion: cache.rawdatalabs.cloud/v1alpha1
 kind: PvcMigration
 metadata:
   name: example-pvc-migration
-  namespace: operator-test
+  namespace: tutorial
 spec:
-  sourceStorage: postgresql
+  sourceStorage: dummy-source-pvc
   destinationStorage: dummy-destination-pvc

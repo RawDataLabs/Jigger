@@ -6,8 +6,8 @@ NAMESPACE=$(oc project rawdata)
 echo "Creating CRDS"
 oc create -f ./deploy/crds/cache_v1alpha1_pvcmigration_crd.yaml
 oc create -f ./deploy/crds/cache_v1alpha1_postgresqlmigration_crd.yaml
-oc create -f ./deploy/crds/cache_v1alpha1_mongodbmigration_crd.yaml
 oc create -f ./deploy/crds/cache_v1alpha1_externalroute_crd.yaml
+# oc create -f ./deploy/crds/cache_v1alpha1_mongodbmigration_crd.yaml
 
 sleep 1
 
