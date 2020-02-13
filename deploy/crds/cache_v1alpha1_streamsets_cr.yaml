@@ -1,0 +1,8 @@
+apiVersion: cache.rawdatalabs.cloud/v1alpha1
+kind: Streamsets
+metadata:
+  name: example-streamsets2
+spec:
+  # Add fields here
+  storage_class: external-glusterfs-ssd
+

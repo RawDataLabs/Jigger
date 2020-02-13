@@ -1,6 +1,6 @@
 ---
 - name: Create External Route 
   k8s:
-   state: present
-   definition: "{{ lookup('template', 'ext-route-bundle.yml.j2') }}"
-   namespace: "{{ meta.namespace }}"
+    state: present
+    definition: "{{ lookup('template', 'ext-route-bundle.yml.j2') }}"
+    namespace: "{{ meta.namespace }}"

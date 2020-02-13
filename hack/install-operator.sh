@@ -8,6 +8,7 @@ echo "Creating CRDS:"
 kubectl create -f ./deploy/crds/cache_v1alpha1_pvcmigration_crd.yaml
 kubectl create -f ./deploy/crds/cache_v1alpha1_postgresqlmigration_crd.yaml
 kubectl create -f ./deploy/crds/cache_v1alpha1_externalroute_crd.yaml
+# kubectl create -f ./deploy/crds/cache_v1alpha1_streamsets_crd.yaml
 
 echo "Creating Operator Resources:"
 kubectl create -f ./deploy/service_account.yaml
