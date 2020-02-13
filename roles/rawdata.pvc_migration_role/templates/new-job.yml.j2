@@ -1,0 +1,30 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: "{{ meta.name }}"
+  namespace: "{{ meta.namespace }}"
+spec:
+  template:
+    spec:
+      volumes:
+      - name: source-storage
+        persistentVolumeClaim:
+          claimName: "{{ source_storage }}"
+      - name: destination-storage
+        persistentVolumeClaim:
+          claimName: "{{ destination_storage }}"
+      containers:
+      - name: rsync-pod
+        image: quay.io/rawdatalabs/rhel-ubi7-rsync:latest
+        command:
+        - rsync
+        - "-a"
+        - "--progress"
+        - "/tmp/source/"
+        - "/tmp/destination/"
+        volumeMounts:
+        - mountPath: "/tmp/source/"
+          name: source-storage
+        - mountPath: "/tmp/destination/"
+          name: destination-storage
+      restartPolicy: OnFailure

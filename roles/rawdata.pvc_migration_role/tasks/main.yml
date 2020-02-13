@@ -1,38 +1,9 @@
 ---
+# image: quay.io/rawdatalabs/alpine-kubectl
 # tasks file for rawdata.pvc_migration_role
 - name: start PVC Migration Job
   k8s:
-    definition: |
-      kind: Job
-      apiVersion: batch/v1
-      metadata:
-        name: "{{ meta.name }}"
-        namespace: "{{ meta.namespace }}"
-      spec:
-        template:
-          spec:
-            volumes:
-            - name: source-storage
-              persistentVolumeClaim:
-                claimName: "{{ source_storage }}"
-            - name: destination-storage
-              persistentVolumeClaim:
-                claimName: "{{ destination_storage }}"
-            containers:
-            - name: rsync-pod
-              image: quay.io/rawdatalabs/rhel-ubi7-rsync:latest
-              # image: quay.io/rawdatalabs/alpine-kubectl
-              command:
-              - rsync
-              - "-a"
-              - "--progress"
-              - "/tmp/source/"
-              - "/tmp/destination/"
-              volumeMounts:
-              - mountPath: "/tmp/source/"
-                name: source-storage
-              - mountPath: "/tmp/destination/"
-                name: destination-storage
-            restartPolicy: OnFailure
-        backoffLimit: '4'
+   state: present
+   definition: "{{ lookup('template', 'new-job.yml.j2') }}"
+   namespace: "{{ meta.namespace }}"
 
