@@ -127,4 +127,4 @@ $ kubectl logs deployment/jigger-operator -f
 
 
 
-Special Thanks to OperatorHub.io, Openshift.io, RedHat.com, Kubernetes.io, GitHub.com, Quay.io - I hope you Enjoy it
+Special Thanks to github.com/operator-framework, OperatorHub.io, Openshift.io, RedHat.com, Kubernetes.io, GitHub.com, Quay.io - I hope you Enjoy it
